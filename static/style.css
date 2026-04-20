@@ -1,0 +1,21 @@
+.heading h1{
+    color:black;
+    text-align: center
+
+}
+
+body{
+    font-family:Poppins;
+    text-align:center;
+
+}
+
+
+.info{
+    background-color: rgb(221, 234, 248);
+    padding:200px 150px;
+    border-radius:20px;
+    margin-left:10%;
+    margin-right:10%;
+
+}
