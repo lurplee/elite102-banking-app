@@ -46,9 +46,7 @@ def get_name(user_id):
     name = (cursor.fetchone()[0])
     return name
 
-def create_account(first_name,last_name,password):
-
-    
+def create_user(first_name,last_name,password):
 
     #print("ACCOUNT INFO")
    # print(f"First Name: {first_name}\nLast Name: {last_name}\nUser ID: {user_id}\nPassword: {password}")
@@ -61,53 +59,23 @@ def create_account(first_name,last_name,password):
 
     return user_id
 
-    
+def withdraw (user_id, amount):
+    balance = get_balance(user_id)
+    balance -= amount
+    #Update Transaction & Account Tables
 
-def do_transaction(user_id):
-    
-    while True:
-        try:
-            transaction_type = input("[W] Withdraw\n[D] Deposit").upper()
-            cursor.execute("SELECT balance FROM accounts WHERE user_id = %s", (user_id,))
-            balance = float(cursor.fetchone()[0])
-
-            if transaction_type != "W" and transaction_type != "D":
-                raise ValueError
-            
-            if transaction_type == "W":
-                #Select From accounts, current balance
-                
-                
-
-                amount = float(input(f"Current Balance: ${balance}\nWithdraw Amount: $"))
-                while balance < amount:
-                    print("Invalid Withdraw Amount, Please Try Again!")
-                    amount = float(input("Withdraw Amount: $"))
-                
-                amount = round(amount,2)
-                
-                old_balance = balance
-                balance -= amount
-                print(f"WITHDRAWAL SUCCESS!\nOld Balance: ${old_balance}\nNew Balance: ${balance}")
+    cursor.execute("INSERT INTO transactions(user_id, transaction_type,amount) VALUES(%s,%s,%s)", (user_id,"W",amount))
+    cursor.execute("UPDATE accounts SET balance = %s WHERE user_id = %s", (balance,user_id))
+    conn.commit()
 
 
-            if transaction_type == "D":
+def deposit (user_id, amount):
+    balance = get_balance(user_id)
+    balance += amount
 
-                amount = float(input(f"Current Balance: ${balance}\nDeposit Amount: $"))
-                amount = round(amount,2)
-                old_balance = balance
-                balance += amount
-                print(f"DEPOSIT SUCCESS!\nOld Balance: ${old_balance}\nNew Balance: ${balance}")
+    #Update Transaction & Account Tables
 
-            #Update Transaction & Account Tables
-
-            cursor.execute("INSERT INTO transactions(user_id, transaction_type,amount) VALUES(%s,%s,%s)", (user_id,transaction_type,amount))
-            cursor.execute("UPDATE accounts SET balance = %s WHERE user_id = %s", (balance,user_id))
-            conn.commit()
-            break
-        except:
-            print("Invalid Input!")
-
-    cursor.close()
-    conn.close()
+    cursor.execute("INSERT INTO transactions(user_id, transaction_type,amount) VALUES(%s,%s,%s)", (user_id,"D",amount))
+    cursor.execute("UPDATE accounts SET balance = %s WHERE user_id = %s", (balance,user_id))
+    conn.commit()
 

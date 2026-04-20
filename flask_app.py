@@ -32,14 +32,46 @@ def create_app(test_config=None):
         user_id = session.get("user_id")
         balance = main.get_balance(user_id)
         return render_template("home.html", balance=balance)
-      
+
+    @app.route('/withdraw', methods=["GET", "POST"])
+        
+    def withdraw():
+        user_id = session.get("user_id")
+        balance = main.get_balance(user_id)
+        if request.method == 'POST':
+            amount = float(request.form["amount"])
+            amount = round(amount,2)
+
+            if amount > balance:
+                error = "Invalid Withdraw Amount"
+                return render_template("withdraw.html", error=error, balance=balance)
+
+
+            main.withdraw(user_id, amount)
+            
+  
+        return render_template("withdraw.html", balance=balance)
+    
+    @app.route('/deposit', methods=["GET", "POST"])
+    def deposit():
+        user_id = session.get("user_id")
+        balance = main.get_balance(user_id)
+        if request.method == 'POST':
+            amount = float(request.form["amount"])
+            amount = round(amount,2)
+
+            main.deposit(user_id, amount)
+            
+  
+        return render_template("deposit.html", balance=balance)
+    
     @app.route('/register', methods=['GET', 'POST'])
     def register():
         if request.method == 'POST':
             first_name = request.form["first_name"]
             last_name = request.form["last_name"]
             password = request.form["password"]
-            user_id = main.create_account(first_name, last_name, password)
+            user_id = main.create_user(first_name, last_name, password)
             session["user_id"] = user_id
             return redirect(url_for("home"))
         return render_template("register.html")

@@ -15,20 +15,22 @@
 
 <body>
     <div class="heading">
-        <h1>BankApp</h1>
+    <h1>BankApp</h1>
     </div>
-
-    <div class="info">
-    <h1>Current Balance: ${{balance}}</h1>
     <p>This is my first paragraph in HTML.</p>
-    <a href="withdraw">
-    <button>Withdraw</button>
-    </a>
-    <a href="deposit">
-        <button>Deposit</button>
-    </a>
+
     <h3>Create Account</h3>
-    </div>
+    <form method="post">
+        <h4>Amount</h4>
+        <input type="number" name="amount" required>
+        <br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+            <a href="home">
+                <button>HOME</button>
+            </a>
 </body>
 
 </html>
