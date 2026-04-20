@@ -11,9 +11,11 @@ conn = mysql.connector.connect(
 cursor = conn.cursor()
 
 # Create the contacts table
+
+
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS accounts (
-        user_id INT PRIMARY KEY,
+        user_id INT AUTO_INCREMENT  PRIMARY KEY,
         password varchar(255),
         first_name varchar(255),
         last_name varchar(255),
@@ -34,30 +36,32 @@ cursor.execute('''
     )
 ''')
 
+def get_balance(user_id):
+    cursor.execute("SELECT balance FROM accounts WHERE user_id = %s", (user_id,))
+    balance = float(cursor.fetchone()[0])
+    return balance
 
-def create_account():
-    print("CREATE AN ACCOUNT")
-    first_name = input("First Name: ")
-    last_name = input("Last Name: ")
-    password = input("Password: ")
+def get_name(user_id):
+    cursor.execute("SELECT first_name FROM accounts WHERE user_id = %s", (user_id,))
+    name = (cursor.fetchone()[0])
+    return name
 
-    # user_id made global b/c used in every function
-    user_id = random.randrange(100,900)
+def create_account(first_name,last_name,password):
+
     
 
-    print("ACCOUNT INFO")
-    print(f"First Name: {first_name}\nLast Name: {last_name}\nUser ID: {user_id}\nPassword: {password}")
-
-
-    print("ACCOUNT CREATED!")
+    #print("ACCOUNT INFO")
+   # print(f"First Name: {first_name}\nLast Name: {last_name}\nUser ID: {user_id}\nPassword: {password}")
     # Updating Accounts Table
 
-    cursor.execute("INSERT INTO accounts VALUES (%s, %s, %s, %s, %s)", (user_id, password, first_name, last_name, 0.00))
+    cursor.execute("INSERT INTO accounts (password, first_name, last_name, balance) VALUES (%s, %s, %s, %s)", (password, first_name, last_name, 0.00))
     conn.commit()
+
+    user_id = cursor.lastrowid
 
     return user_id
 
-
+    
 
 def do_transaction(user_id):
     
@@ -104,8 +108,6 @@ def do_transaction(user_id):
         except:
             print("Invalid Input!")
 
+    cursor.close()
+    conn.close()
 
-user_id = create_account()
-do_transaction(user_id)
-
-conn.close()
