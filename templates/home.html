@@ -26,6 +26,55 @@
    </div>
 
     
+   {%if user_id == 1%}
+<div class="heading">
+    <!-- <i class="fa-solid fa-comment-dollar" style="font-size:40px"></i> -->
+    <h1>BankApp</h1>
+    <h2><i>Welcome Admin: (User ID: {{user_id}})!</h2> </i>
+</div>
+
+<div class="info">
+    <h2> <i class="fa-solid fa-wallet"></i> Total Balance: ${{total_balance}} (All Users)</h2>
+    <div class="account-heading">
+        <h1><i class="fa-solid fa-money-check-dollar"></i> All Accounts</h1>
+    </div>
+
+    <div class="acc_info">
+        {% if all_accounts %}
+        {% for account in all_accounts%}
+        <div class="account">
+            <h2>{{account[1]}}</h2>
+            <h3>{{account[2]}}</h3>
+        </div>
+        {%endfor%}
+
+        {% else %}
+        <h2>No Accounts Created.</h2>
+        {%endif%}
+    </div>
+
+    <div class=all_buttons>
+        <a href="delete_account">
+            <i class="fa-solid fa-arrow-down"></i> Delete Accounts
+        </a>
+        <a href="deposit">
+            <i class="fa-solid fa-arrow-up"></i> Deposit
+        </a>
+        <a href="create_account">
+            <i class="fa-solid fa-file-invoice-dollar"></i> Create Account
+        </a>
+
+        <a href="past_transactions">
+            <i class="fa-solid fa-receipt"></i> View Transactions
+        </a>
+
+        <a href="transfer">
+            <i class="fa-solid fa-money-bill-transfer"></i> Transfer Funds
+        </a>
+    </div>
+</div>
+   {%else%}
+
     <div class="heading">
         <!-- <i class="fa-solid fa-comment-dollar" style="font-size:40px"></i> -->
         <h1>BankApp</h1>
@@ -71,8 +120,10 @@
         <i class="fa-solid fa-money-bill-transfer"></i> Transfer Funds
     </a>
     </div>
-
     </div>
+    {%endif%}
+
+    
 </body>
 
 </html>

@@ -6,14 +6,15 @@ conn = mysql.connector.connect(
     host="localhost",
     user="root",
     password="gearup4me",
-    database="banking_app"
+    database="banking_app",
+    consume_results=True
 )
 cursor = conn.cursor()
 
-# Create the contacts table
-#cursor.execute("DROP DATABASE banking_app")
-#cursor.execute("CREATE DATABASE banking_app")
-#cursor.execute("USE banking_app")
+# UNCOMMENT TO RESET DATABASE
+# cursor.execute("DROP DATABASE banking_app")
+# cursor.execute("CREATE DATABASE banking_app")
+# cursor.execute("USE banking_app")
 # cursor.execute("DROP TABLE IF EXISTS accounts")
 # cursor.execute("DROP TABLE IF EXISTS transactions")
 # cursor.execute("DROP TABLE IF EXISTS users")
@@ -59,6 +60,20 @@ cursor.execute('''
         
     )
 ''')
+def check_admin():
+    cursor.execute("SELECT user_id FROM users WHERE user_id = %s", (1,))
+    admin_info = cursor.fetchall()
+
+    if admin_info == None:
+        cursor.execute("INSERT INTO users  (password, first_name, last_name, total_balance, phone_number) VALUES ( %s, %s, %s, %s,%s)", ("adminpassword", "Admin", "Admin",0.0, 000000))
+        conn.commit()
+        print("Admin Created!")
+    else:
+        print("Admin Already Created!")
+
+
+check_admin()
+
 
 def get_balance(user_id, account_id):
     cursor.execute("SELECT balance FROM accounts WHERE user_id = %s AND account_id = %s", (user_id,account_id))
@@ -70,14 +85,28 @@ def get_name(user_id):
     name = (cursor.fetchone()[0])
     return name
 
+def delete_account(account_id):
+    cursor.execute("DELETE FROM transactions WHERE account_id = %s", (account_id,))
+    cursor.fetchall()
+    cursor.execute("DELETE FROM accounts WHERE account_id = %s", (account_id,))
+    conn.commit()
+    #Documents number of rows affected by Delete
+    return cursor.rowcount > 0 
+
+
+    
+
+
 def get_phone_number(user_id):
     cursor.execute("SELECT phone_number FROM users WHERE user_id = %s", (user_id,))
     phone_number = (cursor.fetchone()[0])
     return phone_number
-# def get_account_name(user_id):
-#     cursor.execute("SELECT account_name FROM accounts WHERE user_id = %s", (user_id,))
-#     account_name = (cursor.fetchone()[0])
-#     return account_name
+
+def get_account_name(account_id):
+    cursor.execute("SELECT account_name FROM accounts WHERE account_id = %s", (account_id,))
+    account_name = "Yeehaw"
+    # account_name = (cursor.fetchone()[0])
+    return account_name
 
 
 def create_user(first_name,last_name,password, phone_number):
@@ -172,6 +201,13 @@ def withdraw (user_id, account_id, amount):
     conn.commit()
     return True
 
+def get_all_accounts():
+    cursor.execute("SELECT * FROM accounts")
+    all_accounts = cursor.fetchall()
+    return all_accounts
+
+
+
 def deposit (user_id, account_id,amount):
     balance = get_balance(user_id,account_id)
     accounts = get_accounts(user_id)
@@ -184,4 +220,3 @@ def deposit (user_id, account_id,amount):
     cursor.execute("UPDATE accounts SET balance = %s WHERE user_id = %s AND account_id = %s", (balance, user_id, account_id))
     cursor.execute("UPDATE users SET total_balance = %s WHERE user_id =%s",(total_balance,user_id) )
     conn.commit()
-

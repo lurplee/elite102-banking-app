@@ -30,10 +30,38 @@ def create_app(test_config=None):
     @app.route('/home')
     def home():
         user_id = session.get("user_id")
+        user_id = int(user_id)
+
+        all_accounts = main.get_all_accounts()
         user_name = main.get_name(user_id)
         accounts = main.get_accounts(user_id)
         total_balance = main.get_total_balance(accounts)
-        return render_template("home.html",accounts = accounts, user_name = user_name, user_id = user_id, total_balance = total_balance)
+
+
+        return render_template("home.html",accounts = accounts, user_name = user_name, user_id = user_id, total_balance = total_balance, all_accounts=all_accounts)
+    
+    @app.route('/delete_account', methods=["GET", "POST"])
+    def delete_account():
+        user_id = session.get("user_id")
+        all_accounts = main.get_all_accounts()
+        update= None
+
+        if request.method == 'POST':
+            deleted_account = int(request.form["chosen_account"])
+            deleted_account_name = main.get_account_name(deleted_account)
+            delete_success = main.delete_account(deleted_account)    
+
+            if delete_success:
+        
+                update = f"{deleted_account_name} successfully deleted!"
+            
+            else:
+                update= (f"{deleted_account_name} could not be deleted!")
+        
+        # account_id = request.args.get("account_id")
+
+
+        return render_template("delete_account.html", all_accounts=all_accounts, update=update)
     
     @app.route('/login', methods=["GET", "POST"])
     def login():
