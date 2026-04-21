@@ -15,33 +15,30 @@
 
 <body>
     <div class="heading">
-    <h1>BankApp</h1>
+        <h1>BankApp</h1>
     </div>
 
     <div class="info">
-    <h2>Register</h2>
-    <form method="post">
-        <h4>First Name</h4>
-        <input type="text" name="first_name" required>
-        <br><br>
-        <h4>Last Name</h4>
-        <input type="text" name="last_name" required>
-        <br><br>
-        <h4>Phone Number</h4>
-        <input type="phone number" name="phone_number" required>
-        <br><br>
-        <h4>Password</h4>
-        <input type="password" name="password" required>
-        <br><br>
-        
-        <input type="submit" value="Submit">
-        </div>
-    </form>
-
-    <h5 style="font-size:20px;margin:0">Have an account?</h5>    <div class="all_buttons">
-        <a href = "login">Login</a>
+        <h2>Login</h2>
+        <form method="post">
+            <h4>User ID</h4>
+            <input type="number" name="entered_user_id" required>
+            <br><br>
+            <h4>Password</h4>
+            <input type="password" name="entered_password" required>
+            <br><br>
+            {%if error%}
+            <b>
+                <p style="color:red">{{error}}</p>
+            </b>
+            {%endif%}
+            <input type="submit" value="Submit">
     </div>
-
+    </form>
+    <h5 style = "font-size:20px;margin:0">Don't have an account?</h5>
+    <div class="all_buttons">
+        <a href="register">Register</a>
+    </div>
 </body>
 
 </html>

@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <script src="https://kit.fontawesome.com/1998a618e3.js" crossorigin="anonymous"></script>
+
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
@@ -17,16 +19,23 @@
 
 <body>
 
-   
+   <div class = "log_out">
+    <a href = "login">
+    <i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out
+    </a>
+   </div>
+
+    
     <div class="heading">
+        <!-- <i class="fa-solid fa-comment-dollar" style="font-size:40px"></i> -->
         <h1>BankApp</h1>
-        <h2><i>Welcome {{user_name}}!</h2> </i>
+        <h2><i>Welcome {{user_name}} (User ID: {{user_id}})!</h2> </i>
     </div>
 
     <div class="info">
-    
+    <h2> <i class="fa-solid fa-wallet"></i> Total Balance: ${{total_balance}}</h2>
     <div class = "account-heading">
-        <h1>Accounts</h1>
+        <h1><i class="fa-solid fa-money-check-dollar"></i> Accounts</h1>
     </div>
  
     <div class="acc_info">
@@ -45,13 +54,21 @@
 
     <div class = all_buttons>
     <a href="withdraw">
-    Withdraw
+    <i class="fa-solid fa-arrow-down"></i> Withdraw
     </a>
     <a href="deposit">
-        Deposit
+        <i class="fa-solid fa-arrow-up"></i> Deposit
     </a>
     <a href = "create_account">
-        Create Account
+        <i class="fa-solid fa-file-invoice-dollar"></i> Create Account
+    </a>
+
+    <a href="past_transactions">
+        <i class="fa-solid fa-receipt"></i> View Transactions
+    </a>
+
+    <a href="transfer">
+        <i class="fa-solid fa-money-bill-transfer"></i> Transfer Funds
     </a>
     </div>
 

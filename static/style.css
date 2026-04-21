@@ -13,11 +13,12 @@
     color:rgb(172, 172, 172);
     text-shadow: 2px 2px 2px rgba(25, 146, 39, 0.235);
 }
-body{
+body,html{
+    height:100%;
     font-family:Poppins;
     text-align:center;
 
-            background: linear-gradient(180deg, #ffffff, #def2dd);
+    background: linear-gradient(180deg, #ffffff, #ddf4dc);
 
 }
 .info h2{
@@ -57,15 +58,46 @@ body{
     
 }
 
-.acc_info h1{
+.transaction_info {
+    width: 80%;
+    max-height:350px;
+    background-color: rgb(224, 247, 255);
+    padding: 16px;
+    border-radius: 20px;
+    gap: 15px;
+    display: flex;
+    flex-direction:column;
+    margin: 0 auto;
+    overflow-y: auto;
+
+}
+
+.acc_info h1, .transaction_info h1{
     text-align: left;
 
 
 }
 
-.account h2{
+.account h2, .transaction h2{
     font-size:23px;
     color:rgba(7, 7, 123, 0.645)
+}
+
+.transaction{
+    background: white;
+    padding: 10px;
+    border-radius: 14px;
+    height:fit-content;
+    width:97%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: box-shadow 0.2s ease;
+}
+
+.transaction h4{
+    margin:0;
+    color:rgb(97, 97, 97);
+    /* font-weight: 100; */
+    font-family:Poppins;
 }
 .account {
     background: white;
@@ -96,12 +128,16 @@ body{
 
 }
 
+h5{
+    margin-bottom:0;
+}
+
 input[type ="submit"]{
     font-family:Poppins;
 }
 
 
-.all_buttons a, input[type="submit"]{
+.all_buttons a, input[type="submit"],.log_out a{
     background-color: rgb(2, 91, 15);
     color:white;
     padding:10px;
@@ -114,9 +150,23 @@ input[type ="submit"]{
 }
 
 
-.all_buttons a:hover, input[type="submit"]:hover{
+.all_buttons a:hover, input[type="submit"]:hover, .log_out a:hover{ 
     background-color: rgb(39, 94, 47);
     box-shadow: 0px 6px 10px rgb(128, 128, 128);
     transition: box-shadow 0.2s ease;
 
+}
+
+.info h4{
+    margin-bottom:0;
+}
+
+.log_out{
+    padding:10px;
+    position: absolute;
+    top: 30px;
+    left: 20px;
+    margin:0;
+    display:flex;
+    align-content:left;
 }
