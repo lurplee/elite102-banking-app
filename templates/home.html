@@ -11,23 +11,50 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
+
 </head>
 
+
 <body>
+
+   
     <div class="heading">
         <h1>BankApp</h1>
+        <h2><i>Welcome {{user_name}}!</h2> </i>
     </div>
 
     <div class="info">
-    <h1>Current Balance: ${{balance}}</h1>
-    <p>This is my first paragraph in HTML.</p>
+    
+    <div class = "account-heading">
+        <h1>Accounts</h1>
+    </div>
+ 
+    <div class="acc_info">
+    {% if accounts %}
+        {% for account in accounts%}
+        <div class = "account">
+        <h2>{{account[1]}}</h2>
+        <h3>${{account[2]}}</h3>
+        </div>
+        {%endfor%}
+    
+    {% else %}
+        <h2>No Accounts Created.</h2>
+    {%endif%}
+    </div>
+
+    <div class = all_buttons>
     <a href="withdraw">
-    <button>Withdraw</button>
+    Withdraw
     </a>
     <a href="deposit">
-        <button>Deposit</button>
+        Deposit
     </a>
-    <h3>Create Account</h3>
+    <a href = "create_account">
+        Create Account
+    </a>
+    </div>
+
     </div>
 </body>
 

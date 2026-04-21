@@ -3,7 +3,7 @@ from markupsafe import escape
 import main
 from flask import Flask
 
-from flask import request, render_template, redirect, url_for,session
+from flask import request, render_template, redirect, url_for, session
 
 
 
@@ -30,40 +30,71 @@ def create_app(test_config=None):
     @app.route('/home')
     def home():
         user_id = session.get("user_id")
-        balance = main.get_balance(user_id)
-        return render_template("home.html", balance=balance)
+        user_name = main.get_name(user_id)
+        accounts = main.get_accounts(user_id)
+        return render_template("home.html",accounts = accounts, user_name = user_name)
 
     @app.route('/withdraw', methods=["GET", "POST"])
-        
     def withdraw():
         user_id = session.get("user_id")
-        balance = main.get_balance(user_id)
+        accounts = main.get_accounts(user_id)
+        balance = None
+        account_id =None
+
         if request.method == 'POST':
+            account_id = request.form["account_id"]
+
             amount = float(request.form["amount"])
             amount = round(amount,2)
 
-            if amount > balance:
-                error = "Invalid Withdraw Amount"
-                return render_template("withdraw.html", error=error, balance=balance)
+            success = main.withdraw(user_id, account_id, amount)
 
+            if success:
+                #Redirects so that the selected account's balance shows up
+                return redirect(url_for("withdraw", account_id=account_id))
+            else:
+                error = "Insufficient Funds!"
+                return render_template("withdraw.html", accounts=accounts, balance=balance, account_id=account_id,error=error)
 
-            main.withdraw(user_id, amount)
             
-  
-        return render_template("withdraw.html", balance=balance)
+        
+        account_id = request.args.get("account_id")
+
+        if (account_id != None):
+            account_id = int(account_id)
+            balance = main.get_balance(user_id, account_id)
+
+        return render_template("withdraw.html", accounts=accounts, balance=balance, account_id=account_id)
+    
     
     @app.route('/deposit', methods=["GET", "POST"])
     def deposit():
         user_id = session.get("user_id")
-        balance = main.get_balance(user_id)
+        accounts = main.get_accounts(user_id)
+        balance = None
+        account_id =None
+
         if request.method == 'POST':
+            account_id = request.form["account_id"]
+
             amount = float(request.form["amount"])
             amount = round(amount,2)
 
-            main.deposit(user_id, amount)
+            main.deposit(user_id, account_id, amount)
+
+            #Redirects so that the selected account's balance shows up
+            return redirect(url_for("deposit", account_id=account_id))
             
+        
+        account_id = request.args.get("account_id")
+        
+        if (account_id != None):
+            
+            int(account_id)
+            balance = main.get_balance(user_id, int(account_id))
+
   
-        return render_template("deposit.html", balance=balance)
+        return render_template("deposit.html", accounts=accounts, balance=balance, account_id=account_id)
     
     @app.route('/register', methods=['GET', 'POST'])
     def register():
@@ -75,6 +106,19 @@ def create_app(test_config=None):
             session["user_id"] = user_id
             return redirect(url_for("home"))
         return render_template("register.html")
+
+    @app.route('/create_account', methods=['GET', 'POST'])
+    def create_account():
+        if request.method == 'POST':
+            user_id = session.get("user_id")
+            account_name = request.form["account_name"]
+            initial_deposit = float(request.form["initial_deposit"])
+            main.create_account(user_id, account_name,initial_deposit)
+
+
+
+
+        return render_template("create_account.html")
 
     return app
 if __name__ == '__main__':

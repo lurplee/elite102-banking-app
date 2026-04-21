@@ -17,19 +17,37 @@
     <div class="heading">
     <h1>BankApp</h1>
     </div>
-    <p>This is my first paragraph in HTML.</p>
 
-    <h3>Withdraw</h3>
+    <div class ="info">
+    <h2> Withdraw</h2>
+    {% if accounts %}
     <form method="post">
         <h4>Amount</h4>
-        <input type="number" name="amount" max = "{{balance}}" required>
+        <select name="account_id">
+            {% for account in accounts %}
+            <option value="{{ account[0] }}">
+                {{ account[1] }} [${{account[2]}}]
+            </option>
+            {% endfor %}
+        </select>
+        <input type="number" name="amount" max="balance" required>
         <br><br>
         <input type="submit" value="Submit">
     </form>
+    {% else %}
+    <h3> No Accounts Available</h3>
+    <p> Create an Account to Deposit/Withdraw</p>
+    {% endif %}
+    </div>
+    {%if error%}
+    <p>{{error}}</p>
+    {%endif%}
 
+    <div class="all_buttons">
         <a href="home">
-            <button>HOME</button>
+            HOME
         </a>
+    </div>
 </body>
 
 </html>
