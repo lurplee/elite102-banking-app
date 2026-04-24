@@ -32,10 +32,18 @@
         </div>
 
         <div class="transaction_info">
-            {% if transactions %}
-            {% for transaction in transactions%}
+        
+        
+        {% if user_id == 100 %}
+            {% set transaction_list = all_transactions %}
+        {%else%}
+            {% set transaction_list = transactions %}
+        {%endif%}
+
+            {% if transaction_list %}
+            {% for transaction in transaction_list%}
             <div class="transaction">
-                <h2>{{transaction.account_name}}</h2>
+                <h2>{{transaction.account_name}} ({{transaction.account_id}})</h2>
 
                 {%if transaction.type == "Withdraw" or transaction.type == "Transfer Out"%}
                 <h3 style="color:red">-${{transaction.amount}}</h3>

@@ -26,7 +26,7 @@
    </div>
 
     
-   {%if user_id == 1%}
+   {%if user_id == 100%}
 <div class="heading">
     <!-- <i class="fa-solid fa-comment-dollar" style="font-size:40px"></i> -->
     <h1>BankApp</h1>
@@ -44,7 +44,8 @@
         {% for account in all_accounts%}
         <div class="account">
             <h2>{{account[1]}}</h2>
-            <h3>{{account[2]}}</h3>
+            <h3>${{account[3]}}</h3>
+            <i><h3>{{account[2]}}</h3></i>
         </div>
         {%endfor%}
 
@@ -57,8 +58,8 @@
         <a href="delete_account">
             <i class="fa-solid fa-arrow-down"></i> Delete Accounts
         </a>
-        <a href="deposit">
-            <i class="fa-solid fa-arrow-up"></i> Deposit
+        <a href="modify_account">
+            <i class="fa-solid fa-arrow-up"></i> Modify Accounts
         </a>
         <a href="create_account">
             <i class="fa-solid fa-file-invoice-dollar"></i> Create Account
@@ -82,7 +83,7 @@
     </div>
 
     <div class="info">
-    <h2> <i class="fa-solid fa-wallet"></i> Total Balance: ${{total_balance}}</h2>
+    <h2> <i class="fa-solid fa-wallet"></i> Total Balance: ${{total_user_balance}}</h2>
     <div class = "account-heading">
         <h1><i class="fa-solid fa-money-check-dollar"></i> Accounts</h1>
     </div>
@@ -91,8 +92,8 @@
     {% if accounts %}
         {% for account in accounts%}
         <div class = "account">
-        <h2>{{account[1]}}</h2>
-        <h3>${{account[2]}}</h3>
+        <h2>{{account[2]}}</h2>
+        <h3>${{account[3]}}</h3>
         </div>
         {%endfor%}
     

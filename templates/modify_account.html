@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Modify Accounts | BankApp</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://kit.fontawesome.com/1998a618e3.js" crossorigin="anonymous"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="heading">
+        <h1>BankApp</h1>
+    </div>
+
+    <div class="info">
+       
+
+    {% if account_id == None %}
+    <h2>Modify Accounts</h2>
+        {% if all_accounts %}
+        <form method="post">
+            <h4>Account</h4>
+            <select name="account_id">
+                {% for account in all_accounts %}
+                <option value="{{ account[0] }}">
+                    {{ account[2] }} [${{account[3]}}]
+                </option>
+                {% endfor %}
+            </select>
+            <br><br>
+            <input type="submit" value="Submit">
+        </form>
+        {% else %}
+        <h3> No Accounts Available</h3>
+        <p> Create an Account to Modify</p>
+        {% endif %}
+    {% else %}
+    <form method="post">
+        <h2>Modifying {{account_name}} [{{account_id}}]</h2>
+        <input type="hidden" name="account_id" value="{{ account_id }}">
+
+        <i><h3 style="padding:0">Current Balance: ${{balance}} User ID: {{user_id}}</h3></i>
+        <h4>Change Balance</h4>
+        <input type="number" name="new_balance">
+        <br>
+         <h4>Change Account Name</h4>
+        <input type="text" name="new_account_name">
+        <br><br>
+        <input type="submit" value="Submit">
+    </form>
+    </div>
+
+    {%endif%}
+    {%if error%}
+    <b>
+        <p style="color:red">{{error}}</p>
+    </b>
+    {%endif%}
+
+    <div class="all_buttons">
+        <b>
+            <a href="home" style="font-size:30px">
+
+                <i class="fa-solid fa-house"></i>
+            </a>
+            </style>
+        </b>
+    </div>
+</body>
+
+</html>
