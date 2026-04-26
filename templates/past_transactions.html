@@ -43,12 +43,12 @@
             {% if transaction_list %}
             {% for transaction in transaction_list%}
             <div class="transaction">
-                <h2>{{transaction.account_name}} ({{transaction.account_id}})</h2>
+                <h2>{{transaction.account_name}} ({{transaction.user_id}})</h2>
 
                 {%if transaction.type == "Withdraw" or transaction.type == "Transfer Out"%}
-                <h3 style="color:red">-${{transaction.amount}}</h3>
+                <h2 style="color:red">-${{transaction.amount}}</h2>
                 {%else%}
-                <h3 style="color:rgb(5, 239, 5)">+${{transaction.amount}}</h3>
+                <h2 style="color:rgb(5, 239, 5)">+${{transaction.amount}}</h2>
                 {%endif%}
                 <i><h4>{{transaction.type}}</h4></i>
                 <p>{{transaction.date}}</p>

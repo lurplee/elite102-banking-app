@@ -41,14 +41,15 @@ def create_app(test_config=None):
 
         return render_template("home.html",accounts = accounts, user_name = user_name, user_id = user_id, total_balance = total_balance, all_accounts=all_accounts, total_user_balance=total_user_balance)
     
-    @app.route('/delete_account', methods=["GET", "POST"])
-    def delete_account():
+    @app.route('/delete_accounts', methods=["GET", "POST"])
+    def delete_accounts():
         user_id = session.get("user_id")
         all_accounts = main.get_all_accounts()
         update= None
 
         if request.method == 'POST':
-            deleted_account = int(request.form.get(["chosen_account"]))
+            deleted_account = int(request.form.get("chosen_account"))
+            print(f"YABABABBABBABABA: {deleted_account}")
             deleted_account_name = main.get_account_name(deleted_account)
             delete_success = main.delete_account(deleted_account)    
 
@@ -59,10 +60,9 @@ def create_app(test_config=None):
             else:
                 update= (f"{deleted_account_name} could not be deleted!")
         
-        # account_id = request.args.get("account_id")
 
 
-        return render_template("delete_account.html", all_accounts=all_accounts, update=update)
+        return render_template("delete_accounts.html", all_accounts=all_accounts, update=update)
     
     @app.route('/login', methods=["GET", "POST"])
     def login():
@@ -123,7 +123,7 @@ def create_app(test_config=None):
 
         if (account_id != None):
             account_id = int(account_id)
-            balance = main.get_balance(account_id)
+            balance = main.get_account_balance(account_id)
 
         return render_template("withdraw.html", accounts=accounts, balance=balance, account_id=account_id)
     
@@ -162,7 +162,7 @@ def create_app(test_config=None):
 
         if (account_id != None):
             account_id = int(account_id)
-            balance = main.get_balance(account_id)
+            balance = main.get_account_balance(account_id)
 
         return render_template("transfer.html", accounts=accounts,balance=balance, account_id=account_id, user_id=user_id)
     
@@ -190,7 +190,7 @@ def create_app(test_config=None):
         if (account_id != None):
             
             int(account_id)
-            balance = main.get_balance(int(account_id))
+            balance = main.get_account_balance(account_id)
 
   
         return render_template("deposit.html", accounts=accounts, balance=balance, account_id=account_id)
@@ -236,7 +236,6 @@ def create_app(test_config=None):
         user_id = None
         all_accounts = main.get_all_accounts()
 
-
         if request.method == 'POST':
             account_id = request.form.get("account_id")
             print(request.form)
@@ -247,7 +246,7 @@ def create_app(test_config=None):
                 new_account_name = request.form.get("new_account_name")
                 if new_balance:
                     new_balance = float(new_balance)
-                    main.update_balance(new_balance, account_id)
+                    main.update_account_balance(new_balance, account_id)
                 if new_account_name:
                     main.update_account_name(new_account_name, account_id)
             return redirect(url_for("modify_account", account_id=account_id,user_id=user_id))
@@ -260,7 +259,7 @@ def create_app(test_config=None):
         if account_id:
                 account_id = int(account_id)
                 account_name = str(main.get_account_name(account_id))
-                balance = main.get_balance(account_id)
+                balance = main.get_account_balance(account_id)
         return render_template("modify_account.html", account_id=account_id, all_accounts=all_accounts, account_name = account_name, balance=balance, user_id=user_id)
 
     return app

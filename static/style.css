@@ -78,9 +78,14 @@ body,html{
 
 }
 
-.account h2, .transaction h2{
+.account h2{
     font-size:23px;
     color:rgba(7, 7, 123, 0.645)
+}
+
+.transaction h2{
+    font-size: 30px;
+    color: rgba(7, 7, 123, 0.645)
 }
 
 .transaction{
@@ -136,6 +141,13 @@ input[type ="submit"]{
     font-family:Poppins;
 }
 
+i {
+    display:flex;
+    align-content: center;
+    text-align: center;
+    justify-content: center;
+
+}
 
 .all_buttons a, input[type="submit"],.log_out a{
     background-color: rgb(2, 91, 15);
