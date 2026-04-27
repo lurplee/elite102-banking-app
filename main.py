@@ -1,11 +1,15 @@
 import mysql.connector
 import random
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 # Connect to your MySQL database
 conn = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="gearup4me",
+    password=os.getenv("DB_PASSWORD"),
     database="banking_app",
     consume_results=True
 )
