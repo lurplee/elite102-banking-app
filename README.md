@@ -1,4 +1,4 @@
-# elite102-banking-app
+# BankApp 
 BankApp is a final project developed for Code2College's Elite102 Class. It integrates Python, MySQL, HTML, Flask to create a fully functional banking web app.
 
 ### FEATURES
