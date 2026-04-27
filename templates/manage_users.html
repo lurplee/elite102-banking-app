@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>BankApp</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://kit.fontawesome.com/1998a618e3.js" crossorigin="anonymous"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+</head>
+
+
+<body>
+
+    
+
+    <div class="heading">
+        <!-- <i class="fa-solid fa-comment-dollar" style="font-size:40px"></i> -->
+        <h1>BankApp</h1>
+    </div>
+
+    <div class="info">
+        <h2>Manage Users</h2>
+        <div class="account-heading">
+            <h1><i class="fa-solid fa-address-book"></i> Users</h1>
+        </div>
+
+        <div class="user_info">
+            {% if all_users %}
+            {% for user in all_users%}
+            <div class="user_card">
+                <h2>{{user[1]}} ({{user[0]}})</h2>
+                <h4>${{user[5]}}</h4>
+                <h5>{{user[6]}}</h5>
+                
+                <div class = "delete_button">
+                    <form method = "post"  onsubmit="return confirm('Delete User {{ user[0] }}');">
+                        <input type="hidden" name = "user_id" value = "{{user[0]}}">
+                        <a style="background-color: red">
+                        <button type="submit">Delete User</button>
+                        </a>
+                    </form>
+                </div>
+            </div>
+            {%endfor%}
+                {%if msg%}
+                <b>
+                    <p style="color:red">{{msg}}</p>
+                </b>
+                {%endif%}
+
+            {% else %}
+            <h2>No Users Created.</h2>
+            {%endif%}
+        </div>
+
+        <div class="all_buttons">
+            <b>
+                <a href="home" style="font-size:30px">
+        
+                    <i class="fa-solid fa-house"></i>
+                </a>
+                </style>
+            </b>
+        </div>
+</body>
+
+</html>

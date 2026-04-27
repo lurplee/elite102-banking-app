@@ -16,11 +16,18 @@
 body,html{
     height:100%;
     font-family:Poppins;
+    min-height: 100vh;
+    margin:0;
     text-align:center;
-
     background: linear-gradient(180deg, #ffffff, #ddf4dc);
 
 }
+
+.body{
+    padding-bottom:100px;
+    background: linear-gradient(180deg, #ffffff, #ddf4dc);
+}
+
 .info h2{
     font-size:30px;
     text-shadow: 2px 2px 2px rgba(3, 150, 20, 0.233);
@@ -33,6 +40,7 @@ body,html{
 .info {
     background-color: white;
     width: 900px;
+    height:auto;
     margin: 25px auto;
     padding: 24px;
     border-radius: 16px;
@@ -45,7 +53,7 @@ body,html{
 }
 
 
-.acc_info {
+.acc_info, .user_info {
     width: 80%;
     height:fit-content;
     background-color:rgb(224, 247, 255);
@@ -72,13 +80,18 @@ body,html{
 
 }
 
-.acc_info h1, .transaction_info h1{
+.acc_info h1, .transaction_info h1, .user_info h1{
     text-align: left;
 
 
 }
 
-.account h2{
+.acc_info h3, .user_info h3{
+    padding:0;
+    margin:7%;
+
+}
+.account h2, .user_card h2{
     font-size:23px;
     color:rgba(7, 7, 123, 0.645)
 }
@@ -104,7 +117,7 @@ body,html{
     /* font-weight: 100; */
     font-family:Poppins;
 }
-.account {
+.account, .user_card {
     background: white;
     padding: 16px;
     border-radius: 14px;
@@ -114,14 +127,46 @@ body,html{
     transition: box-shadow 0.2s ease;
 }
 
-.account:hover {
+.account:hover, .user_card:hover{
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25)
 }
-.account h2{
+.account h2, .user_card h2{
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
+
+.delete_button button{
+   
+    gap: 20px;
+    padding: 30px;
+    background-color: red;
+    color: white;
+    padding: 10px;
+    margin-top:20px;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: inherit;
+    font-family: Poppins;
+
+}
+
+.delete_button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+}
+
+
+.delete_button button:hover{
+    box-shadow: 0px 6px 10px rgb(128, 128, 128);
+    transition: box-shadow 0.2s ease;
+
+}
 .all_buttons {
     
     display:flex;
@@ -160,6 +205,7 @@ i {
     font-size:inherit;
 
 }
+
 
 
 .all_buttons a:hover, input[type="submit"]:hover, .log_out a:hover{ 

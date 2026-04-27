@@ -25,7 +25,6 @@ def create_app(test_config=None):
     # ensure the instance folder exists
     os.makedirs(app.instance_path, exist_ok=True)
 
-    # a simple page that says hello
     
     @app.route('/home')
     def home():
@@ -41,6 +40,28 @@ def create_app(test_config=None):
 
         return render_template("home.html",accounts = accounts, user_name = user_name, user_id = user_id, total_balance = total_balance, all_accounts=all_accounts, total_user_balance=total_user_balance)
     
+    @app.route('/manage_users', methods=["GET", "POST"])
+    def manage_users():
+        msg =  None
+        all_users = main.get_all_users(False)
+        delete_success = False
+        
+        if request.method =="POST":
+            user_id = int(request.form.get("user_id"))
+            delete_success = main.delete_user(user_id)
+
+            if delete_success:
+                msg = f"User {user_id} successfully deleted!"
+
+
+            return redirect(url_for("manage_users", all_users=all_users,msg=msg))
+
+
+        return render_template("manage_users.html",all_users=all_users,msg=msg)
+    
+
+    
+    
     @app.route('/delete_accounts', methods=["GET", "POST"])
     def delete_accounts():
         user_id = session.get("user_id")
@@ -49,7 +70,6 @@ def create_app(test_config=None):
 
         if request.method == 'POST':
             deleted_account = int(request.form.get("chosen_account"))
-            print(f"YABABABBABBABABA: {deleted_account}")
             deleted_account_name = main.get_account_name(deleted_account)
             delete_success = main.delete_account(deleted_account)    
 

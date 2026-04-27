@@ -61,9 +61,13 @@ cursor.execute('''
 
 
 # Returns list of all users in user table
-def get_all_users():
-    cursor.execute("SELECT * FROM users")
-    all_users= cursor.fetchall()
+def get_all_users(include_admin = True):
+    if include_admin:
+        cursor.execute("SELECT * FROM users")
+        all_users= cursor.fetchall()
+    else:
+        cursor.execute("SELECT * FROM users WHERE user_id != 100")
+        all_users= cursor.fetchall()
     return all_users
 
 # Returns balance from a specific account
@@ -189,12 +193,12 @@ def get_all_transactions():
     return result
 
 
-
 # Returns all accounts
 def get_all_accounts():
     cursor.execute("SELECT * FROM accounts")
     all_accounts = cursor.fetchall()
     return all_accounts
+
 
 # Updates balance of an account
 def update_account_balance(new_balance, account_id):
@@ -304,6 +308,13 @@ def delete_account(account_id):
 
     #Documents number of rows affected by Delete
     return cursor.rowcount > 0 
+
+# Deletes user from database
+def delete_user(user_id):
+    cursor.execute("DELETE FROM accounts WHERE user_id = %s", (user_id,))
+    cursor.execute("DELETE FROM users WHERE user_id = %s",(user_id,))
+    conn.commit()
+    return(True)
 
 # Creates an admin account, if one does not exist
 def check_admin():
